@@ -6,7 +6,7 @@ struct Node{
 	Node* next = NULL; //make next as NULL kay dili ma-ponit ang non-pointer to an int
 };
 
-//that person's so pretty
+//he's so pretty
 int main(){
 	int s; //size
 	cout << "Enter size: ";
