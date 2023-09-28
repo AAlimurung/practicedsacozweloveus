@@ -1,6 +1,5 @@
 #include<iostream>
 #include"list2.h"
-//#include "node.h"
 using namespace std;
 
 struct Node{ //link list
@@ -9,7 +8,7 @@ struct Node{ //link list
 };
 
 class LinkList : public LL{ //private - ang head and tail
-	//int size; 
+	int size; 
 	Node* up; //head :)
 	Node* down; //tail :)
 	
@@ -17,31 +16,25 @@ class LinkList : public LL{ //private - ang head and tail
 		Link(){ //declare head and tail as NULL
 			up = NULL;
 			down = NULL;
-			//size = 0;
+			size = 0;
 		}
 		
 //		void addLast(int data){
 //		}
 		
 		void plus(int data){
-			if(up == NULL){ //add at first
-				Node* link = new Node; //link = node;
-				link->data = data;
-				link->tsugi = NULL;
+			Node* link = new Node;
+			link->data = data;
+			link->tsugi = NULL;
+			
+			if(up == NULL){
 				up = link;
-			}else if(down == NULL){
-				Node* link = new Node;
-				link->data = data;
-				link->tsugi = NULL;
-				up->tsugi = link;
 				down = link;
 			}else{
-				Node* link = new Node;
-				link->data = data;
-				link->tsugi = NULL;
 				down->tsugi = link;
 				down = link;
-			}
+			}	
+			size++;
 			return;
 		}
 		
@@ -49,6 +42,9 @@ class LinkList : public LL{ //private - ang head and tail
 //		}
 		
 		void removeAt(int pos){
+			Node* genesis = up; //previous
+			Node* revelation = up; //current
+			
 			if(up == NULL || pos<=0){
 				cout << "Bruh, way sulod ang list." << endl;
 				return;
@@ -56,26 +52,18 @@ class LinkList : public LL{ //private - ang head and tail
 				Node* zelda = up; //zelda = temporary
 				up = up->tsugi;
 				delete zelda; //since wala man ko ga malloc
+				size--;
 				return;
+			}else{
+				while(pos != 1){
+					genesis = revelation;
+					revelation = revelation->tsugi;
+					pos--;
+				}
+				genesis->tsugi = revelation->tsugi;
+				delete revelation;
+				size--;
 			}
-			
-			Node* epona = up; //epona = current node
-			int bram = 1; //count
-			
-			while(epona!=NULL && bram < pos-1){
-				epona = epona->tsugi;
-				bram++;
-			}
-			
-			Node* zelda = epona->tsugi;
-			epona->tsugi = zelda->tsugi;
-			
-			if(zelda->tsugi == NULL){
-				epona->tsugi = NULL;
-				down = epona;
-			}
-			
-			delete zelda;
 			return;
 		}
 		
@@ -113,11 +101,18 @@ class LinkList : public LL{ //private - ang head and tail
 			return;
 		}
 		
-//		int get(int pos){
-//		}
+		int get(int pos){
+			Node* impa = up;
+			int count = 1;
+			while(impa!=NULL && count < pos){
+				impa = impa->tsugi;
+				count++;
+			}
+			return impa->data;
+		}
 		
 		void display(){
-//			cout << "Size: " << size << endl;
+			cout << "Size: " << size << endl;
 			Node* saria = up; //saria = node variable current
 			
 			while(saria != NULL){
@@ -125,8 +120,6 @@ class LinkList : public LL{ //private - ang head and tail
 				saria = saria->tsugi;
 			}
 			cout << endl;
-			
-			delete saria;
 			return;
 		}
 		
