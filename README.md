@@ -1,2 +1,2 @@
-# LinkedList
-Linked List practice
+# DSA
+DSA practice
